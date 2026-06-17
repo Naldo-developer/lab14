@@ -1,7 +1,8 @@
 import { pages, siteUrl } from "../../lib/siteData";
 
 export default async function handler(req, res) {
-  const host = req.headers.host ? `http://${req.headers.host}` : siteUrl;
+  const protocol = req.headers["x-forwarded-proto"] || "https";
+  const host = req.headers.host ? `${protocol}://${req.headers.host}` : siteUrl;
   const today = new Date().toISOString().split("T")[0];
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
